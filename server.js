@@ -3,7 +3,7 @@ var express = require('express'),
     http = require('http').Server(app);
 
 var options = {
-  port: 8080
+  port: process.env.PORT || 8080
 };
 
 
