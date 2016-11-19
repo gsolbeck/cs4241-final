@@ -1,0 +1,66 @@
+<!doctype HTML>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Webchat Nomic - Description</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <script src="lib/jquery-3.1.1.min.js"></script>
+        <script src="js/client.js"></script>
+    </head>
+    <body>
+      <header>
+        <h1>CS 4241 Final Project: Webchat Nomic</h1>
+        <h2>Gareth Solbeck</h2>
+      </header>
+      <section>
+        <hgroup>
+          <h3>Summary</h3>
+        </hgroup>
+        <p>
+          <def>Nomic</def> is a game about making rules. Typically, the game
+          starts with a basic ruleset, which describes how rules may be created,
+          and the game evolves based on the choices of the players. Because of
+          this, games can vary widely.
+        </p>
+        <p>
+          This is a webchat version of Nomic, where the rules are enforced by
+          the server. To make this possible, rules are limited to the scope of
+          messages: each rule can only refer to the content of the messages.
+          Messages that violate any current rules will not be sent.
+        </p>
+        <p>
+          Note: the domain of this Nomic implementation is so restricted that it
+          isn't really a Nomic game anymore. The game will probably get a more
+          accurate (and interesting) name during development.
+        </p>
+      </section>
+      <section>
+        <hgroup>
+          <h3>Features</h3>
+        </hgroup>
+        <ul>
+          <li>Send messages in a group chat</li>
+          <ul><li>Messages are limited by existing rules</li></ul>
+          <li>Propose rules to be voted on</li>
+          <ul>
+            <li>Require messages to contain/exclude phrases</li>
+            <li>Limit lengths of messages</li>
+            <li>Replace certain phrases with other phrases</li>
+          </ul>
+          <li>Propose repeals of existing rules</li>
+          <li>Vote on proposed rules or repeals</li>
+        </ul>
+      </section>
+      <section>
+        <hgroup>
+          <h3>Stretch Goals</h3>
+        </hgroup>
+        <ul>
+          <li>Multiple simultaneous games</li>
+          <li>Add rules which relate to previous messages</li>
+          <li>Add user attributes (i.e: "points") which rules can operate on</li>
+          <li>Write rule language to allow for complex rules</li>
+        </ul>
+      </section>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "cs4241-final",
+  "version": "0.1.0",
+  "description": "Webchat Nomic (final project for CS4241)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsolbeck/cs4241-final.git"
+  },
+  "keywords": [
+    "cs4241",
+    "chat",
+    "webchat",
+    "nomic",
+    "game"
+  ],
+  "author": "Gareth Solbeck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gsolbeck/cs4241-final/issues"
+  },
+  "homepage": "https://github.com/gsolbeck/cs4241-final#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
