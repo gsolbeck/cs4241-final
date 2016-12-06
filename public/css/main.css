@@ -66,3 +66,17 @@ footer.panel {
 footer.panel a {
   color: white;
 }
+
+#message-box {
+  border: 1px solid #bcbdb8;
+  height: 300px;
+  margin: 10px 0;
+}
+
+#message-input {
+  width: 700px;
+}
+
+#submit-button {
+  width: 100px;
+}
