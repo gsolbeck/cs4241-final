@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/gsolbeck/cs4241-final#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "socket.io": "^1.7.1"
   }
 }
