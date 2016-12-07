@@ -1,19 +1,24 @@
 $(document).ready(function() {
   console.log('Document loaded');
   var socket = io();
+  var joined = false;
+
+  var joinForm = $('#join-form');
+  var usernameInput = $('#username-input');
 
   var messageBox = $('#message-box');
-  var submitButton = $('#submit-button');
+  var messageButton = $('#message-button');
   var messageForm = $('#message-form');
   var messageInput = $('#message-input');
 
+  joinForm.submit(function(event) {
+    event.preventDefault();
+    sendJoinRequest();
+  });
+
   messageForm.submit(function(event) {
     event.preventDefault();
-    socket.emit('new message', {
-      user : 'anonymous',
-      message : messageInput.val()
-    });
-    messageInput.val('');
+    sendMessage();
   });
 
   socket.on('update message', function(data) {
@@ -24,5 +29,34 @@ $(document).ready(function() {
       }));
     });
   });
+
+  function sendJoinRequest() {
+    var data = {
+      username : usernameInput.val()
+    };
+    socket.emit('join', data, function(data) {
+      if (data.error) {
+        console.log(data.message);
+      } else {
+        joined = true;
+        $('#join-panel').hide();
+        $('#message-panel').show();
+        messageInput.focus();
+        messageInput.val('');
+      }
+    });
+  }
+
+  function sendMessage() {
+    if (joined) {
+      socket.emit('new message', {
+        user : 'anonymous',
+        message : messageInput.val()
+      });
+    } else {
+      console.log('');
+    }
+    messageInput.val('');
+  }
 
 });

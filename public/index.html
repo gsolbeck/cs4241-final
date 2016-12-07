@@ -13,15 +13,26 @@
       <h1>CS 4241 Final Project: Webchat Nomic</h1>
       <h2>Gareth Solbeck</h2>
     </header>
-    <section class="panel">
+    <section id="join-panel" class="panel">
+      <hgroup>
+        <h3>Welcome!</h3>
+      </hgroup>
+      <p>Please enter a name below to begin</p>
+      <form id="join-form">
+        <label for="username-input">Name</label>
+        <input id="username-input" name="username"></input>
+        <button type="submit">Join</button>
+      </form>
+    </section>
+    <section id="message-panel" class="panel" hidden >
       <hgroup>
         <h3>Chat</h3>
       </hgroup>
       <!-- Messages are displayed here -->
       <div id="message-box"></div>
       <form id="message-form">
-        <input id="message-input" type="text"></input>
-        <button id="submit-button">Submit</button>
+        <input id="message-input" type="text" autocomplete="off"></input>
+        <button id="message-button">Send</button>
       </form>
     </section>
     <footer class="panel">
