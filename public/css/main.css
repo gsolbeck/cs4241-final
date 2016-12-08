@@ -67,6 +67,11 @@ footer.panel a {
   color: white;
 }
 
+#join-error {
+  color: red;
+  font-weight: bold;
+}
+
 #message-box {
   border: 1px solid #bcbdb8;
   height: 300px;

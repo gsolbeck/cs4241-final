@@ -4,6 +4,7 @@ $(document).ready(function() {
   var joined = false;
 
   var joinForm = $('#join-form');
+  var joinError = $('#join-error');
   var usernameInput = $('#username-input');
 
   var messageBox = $('#message-box');
@@ -36,7 +37,7 @@ $(document).ready(function() {
     };
     socket.emit('join', data, function(data) {
       if (data.error) {
-        console.log(data.message);
+        joinError.text(data.message);
       } else {
         joined = true;
         $('#join-panel').hide();
@@ -50,11 +51,10 @@ $(document).ready(function() {
   function sendMessage() {
     if (joined) {
       socket.emit('new message', {
-        user : 'anonymous',
         message : messageInput.val()
       });
     } else {
-      console.log('');
+      console.log('Player has not joined');
     }
     messageInput.val('');
   }
