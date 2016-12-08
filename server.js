@@ -2,61 +2,64 @@ var path = require('path'),
     _ = require('lodash'),
     express = require('express'),
     app = express(),
-    http = require('http').Server(app)
-    io = require('socket.io')(http);
+    http = require('http').Server(app),
 
-var options = {
-  port: process.env.PORT || 8080
-};
+    Connection = require('./src/connection'),
+    Player = require('./src/player'),
+    options = require('./src/options');
 
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
+var io = new Connection(http);
 var players = {};
 
-io.on('connection', function(socket) {
-  console.log('a user connected');
-  socket.on('join', function(data, fn) {
-    var result = addPlayer(socket, data.username);
-    fn(result);
-  });
-});
+io.open(
+  function(socket) {
+    console.log('a player connected')
+  }, 
+  {
+    'join' : function(clientId, data, callback) {
+      var result = addPlayer(data.username, clientId);
+      callback(result);
+    }
+  }
+);
+io.addGroup('game');
 
-function addPlayer(socket, username) {
+function addPlayer(username, clientId) {
   if (username == null || _.find(players, {username : username})) {
     return {
       error : true,
       message : `The name "${username}" is already in use.`
     };
   } else {
-    players[socket.id] = {
-      username : username,
-      socket : socket.id
-    };
-    socket.join('game');
-    addListeners(socket);
-    console.log('Added a new player');
-    console.log(players);
-    return {error : false};
+    var addedPlayer = new Player(username, clientId);
+    players[addedPlayer.id] = addedPlayer;
+    io.addToGroup(addedPlayer.clientId, 'game');
+    addListeners(addedPlayer);
+    console.log(`a player joined: ${username}`);
+    return { error : false };
   }
 }
 
-function addListeners(socket) {
-  socket.on('new message', function(data) {
-    console.log('message received: ' + data.message);
-    var username = players[socket.id].username;
-    io.emit('update message', {
-      messages: [
-        {
-          user : username,
-          message : data.message
-        }
-      ]
-    });
-  });
-
-  socket.on('disconnect', function() {
-    delete players[socket.id];
+function addListeners(player) {
+  io.addListeners(player.clientId, {
+    'new message' : function(clientId, data) {
+      console.log(`message received from ${player.username}: ${data.message}`);
+      io.groupSend('game', 'update message', {
+        messages: [
+          {
+            user : player.username,
+            message : data.message
+          }
+        ]
+      });
+    },
+    'disconnect' : function() {
+      console.log(`a player disconnected: ${player.username}`)
+      delete players[player.id];
+    }
   });
 }
 
