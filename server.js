@@ -54,6 +54,10 @@ function addListeners(socket) {
       ]
     });
   });
+
+  socket.on('disconnect', function() {
+    delete players[socket.id];
+  });
 }
 
 http.listen(options.port, function () {
