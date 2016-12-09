@@ -9,8 +9,9 @@ var Player = require('./player');
 
 var GAME_ID = 1;
 
-function Game(io) {
+function Game(io, config) {
   this.io = io;
+  this.config = config;
   this.messages = [];
   this.players = {};
 
@@ -54,7 +55,7 @@ Game.prototype.addListeners = function(player) {
         user : player.username,
         message : data.message
       });
-      while (this.messages.length > 50) {
+      while (this.messages.length > this.config.messageLimit) {
         this.messages.shift();
       }
       console.log(`message received from ${player.username}: ${data.message}`);

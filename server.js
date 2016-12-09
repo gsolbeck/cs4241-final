@@ -10,15 +10,15 @@ var path = require('path'),
 
 var Connection = require('./src/connection'),
     Game = require('./src/game'),
-    options = require('./src/options');
+    config = require('./src/config');
 
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 var io = new Connection(http);
 
-var game = new Game(io);
+var game = new Game(io, config.gameConfig);
 
-http.listen(options.port, function () {
-  console.log('Game server listening on port ' + options.port);
+http.listen(config.port, function () {
+  console.log('Game server listening on port ' + config.port);
 });
