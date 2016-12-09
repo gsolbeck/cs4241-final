@@ -11,6 +11,7 @@ var GAME_ID = 1;
 
 function Game(io) {
   this.io = io;
+  this.messages = [];
   this.players = {};
 
   this.io.open(
@@ -21,6 +22,9 @@ function Game(io) {
       'join' : function(clientId, data, callback) {
         var result = this.addPlayer(data.username, clientId);
         callback(result);
+        this.io.send(clientId, 'update message', {
+          messages : this.messages
+        });
       }.bind(this)
     }
   );
@@ -46,6 +50,13 @@ Game.prototype.addPlayer = function(username, clientId) {
 Game.prototype.addListeners = function(player) {
   this.io.addListeners(player.clientId, {
     'new message' : function(clientId, data) {
+      this.messages.push({
+        user : player.username,
+        message : data.message
+      });
+      while (this.messages.length > 50) {
+        this.messages.shift();
+      }
       console.log(`message received from ${player.username}: ${data.message}`);
       this.io.groupSend('game', 'update message', {
         messages: [
