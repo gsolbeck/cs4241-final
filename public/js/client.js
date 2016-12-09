@@ -1,3 +1,8 @@
+/*
+ * Gareth Solbeck, 2016
+ * CS 4241
+ */
+
 $(document).ready(function() {
   console.log('Document loaded');
   var socket = io();

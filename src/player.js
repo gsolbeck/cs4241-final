@@ -1,3 +1,8 @@
+/*
+ * Gareth Solbeck, 2016
+ * CS 4241
+ */
+
 var PLAYER_ID = 1;
 
 function Player(username, clientId) {

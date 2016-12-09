@@ -1,3 +1,8 @@
+/*
+ * Gareth Solbeck, 2016
+ * CS 4241
+ */
+
 var path = require('path'),
     _ = require('lodash'),
     express = require('express'),
