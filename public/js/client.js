@@ -17,6 +17,13 @@ $(document).ready(function() {
   var messageForm = $('#message-form');
   var messageInput = $('#message-input');
 
+  var proposalButton = $('#proposal-button');
+
+  var ruleOverlay = $('#rule-overlay');
+  var ruleForm = $('#rule-form');
+  var ruleCancel = $('#rule-cancel');
+  var ruleSubmit = $('#rule-submit');
+
   joinForm.submit(function(event) {
     event.preventDefault();
     sendJoinRequest();
@@ -27,30 +34,46 @@ $(document).ready(function() {
     sendMessage();
   });
 
-  socket.on('update message', function(data) {
-    data.messages.forEach(function(msg) {
-      console.log('message received: ' + msg.message);
-      messageBox.append($('<div/>', {
-        text : msg.user + ': ' + msg.message
-      }));
-    });
+  ruleForm.submit(function(event) {
+    event.preventDefault();
+    sendRuleProposal();
+  });
+
+  proposalButton.click(function(event) {
+    ruleOverlay.show();
+  })
+
+  ruleCancel.click(function(event) {
+    ruleOverlay.hide();
+    ruleForm.reset();
+  });
+
+  ruleOverlay.click(function(event) {
+    ruleOverlay.hide();
+    ruleForm.reset();
+  });
+  ruleOverlay.children().click(function(event) {
+    event.stopPropagation();
   });
 
   function sendJoinRequest() {
     var data = {
       username : usernameInput.val()
     };
-    socket.emit('join', data, function(data) {
-      if (data.error) {
-        joinError.text(data.message);
-      } else {
-        joined = true;
-        $('#join-panel').hide();
-        $('#message-panel').show();
-        messageInput.focus();
-        messageInput.val('');
-      }
-    });
+    socket.emit('join', data, handleJoinResponse);
+  }
+
+  function handleJoinResponse(data) {
+    if (data.error) {
+      joinError.text(data.message);
+    } else {
+      joined = true;
+      $('#join-panel').hide();
+      $('#message-panel').show();
+      //messageInput.focus();
+      messageInput.val('');
+      socket.on('update message', handleUpdates);
+    }
   }
 
   function sendMessage() {
@@ -62,6 +85,19 @@ $(document).ready(function() {
       console.log('Player has not joined');
     }
     messageInput.val('');
+  }
+
+  function sendRuleProposal() {
+
+  }
+
+  var msgTemplate = _.template('<div><b><%- user %>:</b> <%- message %></div>');
+  function handleUpdates(data) {
+    data.messages.forEach(function(msg) {
+      console.log('message received: ' + msg.message);
+      var messageDiv = msgTemplate(msg);
+      messageBox.append(messageDiv);
+    });
   }
 
 });

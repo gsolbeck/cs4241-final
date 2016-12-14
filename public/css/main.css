@@ -76,6 +76,29 @@ footer.panel a {
   color: white;
 }
 
+.overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+.overlay-content {
+	margin: auto;
+	margin-top: 50px;
+	width: 900px;
+	height: 75%;
+	padding: 20px;
+	overflow: scroll;
+	background-color: #fff;
+	opacity: 1;
+	border: 10px solid #fff;
+}
+
 #join-error {
   color: red;
   font-weight: bold;
@@ -85,6 +108,10 @@ footer.panel a {
   border: 1px solid #bcbdb8;
   height: 300px;
   margin: 10px 0;
+}
+
+#message-box div {
+  font-family: monospace;
 }
 
 #message-input {

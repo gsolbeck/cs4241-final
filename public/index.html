@@ -5,6 +5,7 @@
     <title>The Worst Form of Communication - Chat</title>
     <link rel="stylesheet" href="css/main.css" />
     <script src="lib/jquery-3.1.1.min.js"></script>
+    <script src="lib/lodash.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="js/client.js"></script>
   </head>
@@ -13,7 +14,7 @@
       <h1>The Worst Form of Communication</h1>
       <h2>Gareth Solbeck</h2>
     </header>
-    <section id="join-panel" class="panel">
+    <section class="panel">
       <hgroup>
         <h3>Welcome!</h3>
       </hgroup>
@@ -31,9 +32,9 @@
           Winston S Churchill, 11 November 1947
         </p>
       </blockquote>
-      <hr />
-
-      <p>Please enter a name below to begin</p>
+    </section>
+    <section id="join-panel" class="panel">
+      <p>Please enter a name below to begin.</p>
       <p id="join-error"></p>
       <form id="join-form">
         <label for="username-input">Name</label>
@@ -49,8 +50,18 @@
       <div id="message-box"></div>
       <form id="message-form">
         <input id="message-input" type="text" autocomplete="off"></input>
-        <button id="message-button">Send</button>
+        <button id="message-button" type="submit">Send</button>
+        <button id="proposal-button" type="button">Propose Rule</button>
       </form>
+    </section>
+    <section id="rule-overlay" class="overlay">
+      <div class="overlay-content">
+        <h3>Rule Proposal Form</h3>
+        <form id="rule-form">
+          <button id="rule-submit" type="submit">Propose Rule</button>
+          <button id="rule-cancel" type="button">Cancel</button>
+        </form>
+      </div>
     </section>
     <footer class="panel">
       <p>
