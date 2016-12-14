@@ -26,7 +26,7 @@ li {
 }
 
 p {
-  line-height: 1.5;
+  line-height: 1.3;
 }
 
 a {
@@ -35,6 +35,10 @@ a {
 
 a:hover {
   color: #d74b4b;
+}
+
+blockquote {
+  font-style: italic;
 }
 
 .panel {
