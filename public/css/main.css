@@ -41,10 +41,15 @@ blockquote {
   font-style: italic;
 }
 
+.no-bullets {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 .panel {
   background-color: white;
   border: 1px solid #bcbdb8;
-  margin: 20px;
+  margin: 20px 0;
   padding: 15px;
 }
 
@@ -88,15 +93,8 @@ footer.panel a {
 }
 
 .overlay-content {
-	margin: auto;
-	margin-top: 50px;
-	width: 900px;
-	height: 75%;
-	padding: 20px;
-	overflow: scroll;
-	background-color: #fff;
-	opacity: 1;
-	border: 10px solid #fff;
+	margin: 5% auto;
+	width: 868px;
 }
 
 #join-error {
@@ -115,9 +113,13 @@ footer.panel a {
 }
 
 #message-input {
-  width: 700px;
+  width: 500px;
 }
 
-#submit-button {
-  width: 100px;
+#rule-form ul {
+  margin: 0;
+}
+
+#rule-form div {
+  margin: 20px 0;
 }

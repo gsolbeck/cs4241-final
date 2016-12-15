@@ -45,15 +45,25 @@ $(document).ready(function() {
 
   ruleCancel.click(function(event) {
     ruleOverlay.hide();
-    ruleForm.reset();
+    ruleForm[0].reset();
   });
 
   ruleOverlay.click(function(event) {
     ruleOverlay.hide();
-    ruleForm.reset();
+    ruleForm[0].reset();
   });
   ruleOverlay.children().click(function(event) {
     event.stopPropagation();
+  });
+
+  ruleOverlay.find('input[type=radio]').change(function(event) {
+    if (this.value == 'length') {
+      $('#length-input').attr('disabled', false);
+      $('#phrase-input').attr('disabled', true);
+    } else if (this.value == 'include' || this.value == 'exclude') {
+      $('#length-input').attr('disabled', true);
+      $('#phrase-input').attr('disabled', false);
+    }
   });
 
   function sendJoinRequest() {
@@ -72,14 +82,19 @@ $(document).ready(function() {
       $('#message-panel').show();
       //messageInput.focus();
       messageInput.val('');
-      socket.on('update message', handleUpdates);
+      socket.on('update', handleUpdates);
     }
   }
 
+  var errorTemplate =_.template('<div><i><%- message %></i></div>');
   function sendMessage() {
     if (joined) {
-      socket.emit('new message', {
+      socket.emit('message', {
         message : messageInput.val()
+      }, function(data) {
+        if (data.error) {
+          messageBox.append(errorTemplate(data));
+        }
       });
     } else {
       console.log('Player has not joined');
@@ -88,14 +103,31 @@ $(document).ready(function() {
   }
 
   function sendRuleProposal() {
+    var data = {};
+    $.each(ruleForm.serializeArray(), function(i, field) {
+      data[field.name] = field.value;
+    });
+    if (data.type == 'length') {
+      data = _.omit(data, 'phrase');
+    } else {
+      data = _.omit(data, 'length');
+    }
+    console.log(data);
+    socket.emit('proposal', data);
 
+    ruleOverlay.click();
   }
 
   var msgTemplate = _.template('<div><b><%- user %>:</b> <%- message %></div>');
+  var ruleTemplate =_.template('<div><i>New rule: <%- name %> (<%- description %>)</i></div>');
   function handleUpdates(data) {
-    data.messages.forEach(function(msg) {
-      console.log('message received: ' + msg.message);
-      var messageDiv = msgTemplate(msg);
+    data.updates.forEach(function(u) {
+      if (u.type == 'message') {
+        console.log('message received: ' + u.message);
+        var messageDiv = msgTemplate(u);
+      } else if (u.type == 'proposal') {
+        var messageDiv = ruleTemplate(u);
+      }
       messageBox.append(messageDiv);
     });
   }

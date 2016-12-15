@@ -20,8 +20,8 @@
       </hgroup>
       <p>
         <em>The Worst Form of Communication</em> is a chat where all rules are
-        made by purely democratic vote. As a group, decide upon forbidden phrases,
-        message limits, or even required words!
+        made by democracy. As a group, decide upon forbidden phrases, message
+        limits, or even required words!
       </p>
       <blockquote cite="http://www.winstonchurchill.org/resources/quotations/the-worst-form-of-government">
         <p>
@@ -51,15 +51,42 @@
       <form id="message-form">
         <input id="message-input" type="text" autocomplete="off"></input>
         <button id="message-button" type="submit">Send</button>
-        <button id="proposal-button" type="button">Propose Rule</button>
+        <button id="proposal-button" type="button">Create Rule</button>
       </form>
     </section>
     <section id="rule-overlay" class="overlay">
-      <div class="overlay-content">
+      <div class="panel overlay-content">
         <h3>Rule Proposal Form</h3>
         <form id="rule-form">
-          <button id="rule-submit" type="submit">Propose Rule</button>
-          <button id="rule-cancel" type="button">Cancel</button>
+          <h4><label for="name-input">Rule name</label></h4>
+          <input id="name-input" type="text" name="name" />
+          <h4>Rule type</h4>
+          <ul class="no-bullets">
+            <li>
+              <input id="exclude-radio" type="radio" name="type" value="exclude" />
+              <label for="exclude-radio">Exclusion</label>
+            </li>
+            <li>
+              <input id="include-radio" type="radio" name="type" value="include" />
+              <label for="include-radio">Inclusion</label>
+            </li>
+            <li>
+              <input id="length-radio" type="radio" name="type" value="length" />
+              <label for="length-radio">Length</label>
+            </li>
+          </ul>
+          <div>
+            <h4><label for="phrase-input">Phrase to be excluded/included</label></h4>
+            <input id="phrase-input" type="text" name="phrase" disabled />
+          </div>
+          <div>
+            <h4><label for="length-input">Maximum length of message</label></h4>
+            <input id="length-input" type="number" name="length" disabled />
+          </div>
+          <div>
+            <button id="rule-submit" type="submit">Create Rule</button>
+            <button id="rule-cancel" type="button">Cancel</button>
+          </div>
         </form>
       </div>
     </section>
