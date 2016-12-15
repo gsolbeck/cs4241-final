@@ -6,6 +6,10 @@ message limits, or even required words!
 
 This is the final project for CS4241 (Webware).
 
+### The Team ###
+
+This project was designed and implemented by Gareth Solbeck.
+
 
 ## Socket messages: ##
 
@@ -58,16 +62,6 @@ connections can be found below.
 ```
 
 
-**`vote`** : vote on a rule proposal
-
-```javascript
-{
-  id : '<id of rule>',
-  approve : true | false
-}
-```
-
-
 ### Server-to-client ###
 
 **`update`** : send new events to the client
@@ -86,13 +80,6 @@ connections can be found below.
       id : '<id of rule>',
       name : '<short name of rule>',
       description : '<description of rule>'
-    },
-    {
-      type : 'result',
-      id : '<id of rule>',
-      name : '<short name of rule>',
-      description : '<description of rule>',
-      approved : true | false
     }
   ]
 }

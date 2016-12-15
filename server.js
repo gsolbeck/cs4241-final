@@ -14,6 +14,9 @@ var Connection = require('./src/connection'),
 
 
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.get('/readme.md', function(req, res) {
+  res.sendFile(path.join(__dirname, 'README.md'));
+});
 
 var io = new Connection(http);
 
